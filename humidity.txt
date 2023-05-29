@@ -1,0 +1,37 @@
+// DHT22 Humidity Sensor
+// Connect VCC of DHT22 to 5V, GND to GND, and OUT to D3
+
+#include <DHT.h>
+
+#define DHTPIN 3         // Digital pin 3 for DHT22 output
+#define DHTTYPE DHT22    // Change to DHT11 if you are using DHT11 sensor
+
+DHT dht(DHTPIN, DHTTYPE);  // Initialize DHT sensor
+
+void setup() {
+  Serial.begin(9600);     // Initialize serial communication at 9600 bps
+  dht.begin();            // Initialize DHT sensor
+}
+
+void loop() {
+  // Read temperature and humidity values from DHT sensor
+  float temperature = dht.readTemperature();
+  float humidity = dht.readHumidity();
+
+  // Check if any reads failed and exit early if so
+  if (isnan(temperature) || isnan(humidity)) {
+    Serial.println("Failed to read from DHT sensor!");
+    return;
+  }
+
+  // Display temperature and humidity on the serial monitor
+  Serial.print("Temperature: ");
+  Serial.print(temperature);
+  Serial.print(" °C");
+  Serial.print("\t");
+  Serial.print("Humidity: ");
+  Serial.print(humidity);
+  Serial.print(" %");
+
+  delay(2000);  // Delay for 2 seconds before taking the next reading
+}
