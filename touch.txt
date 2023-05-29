@@ -1,0 +1,25 @@
+// Touch Sensor with Buzzer
+// Connect digital pin D2 of touch sensor to Arduino pin 2
+// Connect a buzzer to Arduino pin 3
+
+const int touchPin = 2;   // Digital pin 2 for touch sensor input
+const int buzzerPin = 3;  // Digital pin 3 for buzzer output
+
+void setup() {
+  pinMode(touchPin, INPUT);   // Set touch sensor pin as input
+  pinMode(buzzerPin, OUTPUT); // Set buzzer pin as output
+  Serial.begin(9600);         // Initialize serial communication at 9600 bps
+}
+
+void loop() {
+  int touchStatus = digitalRead(touchPin);  // Read the touch sensor status
+
+  if (touchStatus == HIGH) {
+    Serial.println("Touch detected!");  // Display message when touch is detected
+    tone(buzzerPin, 1000);               // Turn on the buzzer with a frequency of 1000Hz
+    delay(500);                          // Buzzer on duration: 500ms
+    noTone(buzzerPin);                   // Turn off the buzzer
+  }
+
+  delay(100);  // Delay for 100 milliseconds before checking again
+}
