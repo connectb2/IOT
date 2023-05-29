@@ -1,0 +1,29 @@
+/ Mercury Tilt Switch with Buzzer
+// Connect the tilt switch to Arduino pin 2
+// Connect a buzzer to Arduino pin 3
+
+const int tiltSwitchPin = 2;  // Digital pin 2 for tilt switch input
+const int buzzerPin = 3;     // Digital pin 3 for buzzer output
+
+void setup() {
+  pinMode(tiltSwitchPin, INPUT);   // Set tilt switch pin as input
+  pinMode(buzzerPin, OUTPUT);      // Set buzzer pin as output
+  Serial.begin(9600);              // Initialize serial communication at 9600 bps
+}
+
+void loop() {
+  int tiltStatus = digitalRead(tiltSwitchPin);  // Read the tilt switch status
+
+  if (tiltStatus == HIGH) {
+    Serial.println("Tilt detected!");  // Display message when tilt is detected
+    activateBuzzer();                   // Activate the buzzer
+  }
+
+  delay(100);  // Delay for 100 milliseconds before checking again
+}
+
+void activateBuzzer() {
+  tone(buzzerPin, 1000);  // Turn on the buzzer with a frequency of 1000Hz
+  delay(1000);            // Buzzer on duration: 1000ms
+  noTone(buzzerPin);      // Turn off the buzzer
+}
